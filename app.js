@@ -1,4 +1,4 @@
-require('dotenv').config() // create a .env file at root level.
+require('dotenv').config()
 var express = require('express');
 var path = require('path');
 var fs = require('fs')

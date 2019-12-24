@@ -18,16 +18,7 @@ let userSchema = new mongoose.Schema({
     role: {
         type: String,
         required: true,
-        enum: ['recruiter', 'student']
-    },
-    appliedJobs: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'jobs'
-        }]
-    },
-    skills: {
-        type: [String]
+        enum: ['owner', 'tenent']
     },
     created_on: {
         type: Date,
