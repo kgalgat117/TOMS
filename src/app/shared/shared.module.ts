@@ -38,3 +38,4 @@ export class SharedModule { }
 
 export * from './services/variable';
 export * from './services/auth.service'
+export * from './interfaces/property'
