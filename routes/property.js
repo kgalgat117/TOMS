@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 var UserModel = require('../models/user')
 
-
-
 const jwt = require('jsonwebtoken')
 var mongoose = require('mongoose')
 
@@ -12,8 +10,8 @@ const saltRounds = 10;
 const secretKey = 'Happier';
 
 
-router.get('/', verifyToken, function (req, res) {
-  res.status(200).json({result :'nothing here !'})
+router.post('/', verifyToken, function (req, res) {
+  res.status(200).json({result : req.body})
 })
 
 module.exports = router;

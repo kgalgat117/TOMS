@@ -11,7 +11,7 @@ DB.on('connected', function () {
     console.log('connected to database')
 })
 
-var indexRouter = require('./routes/index');
+var propertyRouter = require('./routes/property');
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'angular/dist/job')))
 
-app.use('/recruiter', indexRouter);
+app.use('/property', propertyRouter);
 app.use('/user', usersRouter);
 
 

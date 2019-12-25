@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import { PropertyInterface } from 'src/app/shared/shared.module';
+import { OwnerService } from '../../owner.service';
 
 @Component({
   selector: 'app-new-property',
@@ -17,15 +17,22 @@ export class NewPropertyComponent implements OnInit {
     country: '',
     pincode: ''
   }
+  propertyParams: Object = {
 
-  constructor() { }
+  }
+
+  constructor(private OwnerService: OwnerService) { }
 
   ngOnInit() {
   }
 
   newProperty(){
     if(this.validatePropertyData()){
-      console.log(this.property)
+      this.OwnerService.makeNewProperty(this.property, this.propertyParams).subscribe(resp=>{
+        console.log(resp)
+      }, err=>{
+        console.log(err)
+      })
     }
   }
 
