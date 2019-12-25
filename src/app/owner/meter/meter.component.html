@@ -4,7 +4,7 @@
 
     </div>
     <div class="col-1">
-      <button routerLink="/dashboard/property/new" class="btn btn-primary">Add</button>
+      <button routerLink="/dashboard/meter/new" class="btn btn-primary">Add</button>
     </div>
   </div>
   <div class="row">
@@ -20,10 +20,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let property of properties; let i = index">
+          <tr *ngFor="let meter of meters; let i = index">
             <th scope="row">{{i + 1}}</th>
-            <td>{{property.name}}</td>
-            <td>{{property.created_on | date}}</td>
+            <td>{{meter.name}}</td>
+            <td>{{meter.created_on | date}}</td>
             <td>
               <div ngbDropdown class="d-inline-block">
                 <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Actions</button>

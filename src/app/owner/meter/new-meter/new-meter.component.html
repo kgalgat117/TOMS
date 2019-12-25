@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <div class="row">
+    <h2>Add New Meter</h2>
+  </div>
+  <div class="row">
+    <div class="container-fluid">
+      <form>
+        <div class="form-group col-md-3">
+          <label for="">Name</label>
+          <input [(ngModel)]="meter.name" name="name" type="text" class="form-control">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="meter_type">Meter Type</label>
+          <select class="custom-select" [(ngModel)]="meter.meter_type" id="meter_type" name="meter_type">
+            <option value="domestic">Domestic</option>
+            <option value="commercial">Commercial</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="rate_per_unit">Rate Per Unit</label>
+          <input [(ngModel)]="meter.rate_per_unit" id="rate_per_unit" name="rate_per_unit" type="number"
+            class="form-control">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <button routerLink="/dashboard/meter" class="btn btn-primary">Cancel</button>
+          </div>
+          <div class="form-group col-md-3">
+            <button *ngIf="!meterParams.meter" [disabled]="!validateMeterData()" (click)="newMeter()"
+              type="submit" class="btn btn-primary">Add</button>
+            <button *ngIf="meterParams.meter" [disabled]="!validateMeterData()" (click)="updateMeter()"
+              type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

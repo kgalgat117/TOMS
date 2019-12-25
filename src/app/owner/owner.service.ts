@@ -27,4 +27,20 @@ export class OwnerService {
     return this.http.get(this.URL + 'property', {params: params})
   }
 
+  makeNewMeter(data, params){
+    return this.http.post(this.URL + 'meter', data, {params: params})
+  }
+
+  getMeters(params){
+    return this.http.get(this.URL + 'meter/all', {params: params})
+  }
+
+  updateMeter(data, params){
+    return this.http.put(this.URL + 'meter', data, {params: params})
+  }
+
+  getMeter(params){
+    return this.http.get(this.URL + 'meter', {params: params})
+  }
+
 }
