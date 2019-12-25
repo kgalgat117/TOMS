@@ -11,6 +11,14 @@ let propertySchema = new mongoose.Schema({
         ref: 'users',
         required: true
     },
+    address1: {
+        type: String,
+        required: true
+    },
+    address2: {
+        type: String,
+        required: true
+    },
     country: {
         type: String,
         required: true

@@ -7,7 +7,8 @@ import { NewPropertyComponent } from './property/new-property/new-property.compo
 const routes: Routes = [
     { path: '', component: OwnerComponent, children: [
         {path: 'property', component: PropertyComponent },
-        {path: 'property/new', component: NewPropertyComponent }
+        {path: 'property/new', component: NewPropertyComponent },
+        {path: 'property/update', component: NewPropertyComponent }
     ] },
 ]
 

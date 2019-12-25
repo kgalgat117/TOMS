@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OwnerService } from '../../owner.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-property',
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class NewPropertyComponent implements OnInit {
 
-  property: PropertyInterface = {
+  property: any = {
     name: '',
     address1: '',
     address2: '',
@@ -18,11 +18,34 @@ export class NewPropertyComponent implements OnInit {
     country: '',
     pincode: ''
   }
-  propertyParams: Object = {
+  propertyParams: any = {
 
   }
 
-  constructor(private OwnerService: OwnerService, private router: Router) { }
+  constructor(private OwnerService: OwnerService, private router: Router, private activeRoute: ActivatedRoute) { 
+    this.activeRoute.queryParams.subscribe(params=>{
+      if(params['property']){
+        this.propertyParams.property = params['property']
+        this.getProperty()
+      }
+    })
+  }
+
+  updateProperty(){
+    this.OwnerService.updateProperty(this.property, this.propertyParams).subscribe(resp=>{
+      this.router.navigate(['/dashboard/property'])
+    }, err=>{
+      console.log(err)
+    })
+  }
+
+  getProperty(){
+    this.OwnerService.getProperty(this.propertyParams).subscribe(resp=>{
+      this.property = resp['result']
+    }, err=>{
+      console.log(err)
+    })
+  }
 
   ngOnInit() {
   }

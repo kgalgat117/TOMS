@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OwnerService } from '../owner.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-property',
@@ -11,8 +12,12 @@ export class PropertyComponent implements OnInit {
   properties: Array<object> = []
   propertiesParams: Object = {}
 
-  constructor(private ownerService: OwnerService) {
+  constructor(private ownerService: OwnerService, private router: Router) {
     this.getProperties()
+   }
+
+   editProperty(property){
+    this.router.navigate(['/dashboard/property/update'], {queryParams: {property: property._id}})
    }
 
   getProperties(){
