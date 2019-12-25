@@ -5,7 +5,6 @@ import { SharedModule } from '../shared/shared.module';
 import { PropertyComponent } from './property/property.component';
 import { NewPropertyComponent } from './property/new-property/new-property.component';
 
-
 @NgModule({
   declarations: [
     OwnerRoutingComponents,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OwnerService } from '../owner.service';
 
 @Component({
   selector: 'app-property',
@@ -7,7 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PropertyComponent implements OnInit {
 
-  constructor() { }
+  properties: Array<object> = []
+  propertiesParams: Object = {}
+
+  constructor(private ownerService: OwnerService) {
+    this.getProperties()
+   }
+
+  getProperties(){
+    this.ownerService.getProperties(this.propertiesParams).subscribe(resp=>{
+      console.log(resp)
+      this.properties = resp['result']
+    }, err=>{
+      console.log(err)
+    })
+  }
 
   ngOnInit() {
   }

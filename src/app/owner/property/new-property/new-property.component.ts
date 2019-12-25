@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OwnerService } from '../../owner.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-property',
@@ -21,7 +22,7 @@ export class NewPropertyComponent implements OnInit {
 
   }
 
-  constructor(private OwnerService: OwnerService) { }
+  constructor(private OwnerService: OwnerService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -29,7 +30,7 @@ export class NewPropertyComponent implements OnInit {
   newProperty(){
     if(this.validatePropertyData()){
       this.OwnerService.makeNewProperty(this.property, this.propertyParams).subscribe(resp=>{
-        console.log(resp)
+        this.router.navigate(['/dashboard/property'])
       }, err=>{
         console.log(err)
       })

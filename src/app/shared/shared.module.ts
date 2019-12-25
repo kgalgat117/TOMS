@@ -8,6 +8,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './services/auth.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
     declarations: [
     ],
@@ -16,6 +18,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        NgbModule
     ],
     providers: [
         CookieService,
@@ -30,6 +33,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        NgbModule
     ]
 
 })

@@ -15,4 +15,8 @@ export class OwnerService {
     return this.http.post(this.URL + 'property', data, {params: params})
   }
 
+  getProperties(params){
+    return this.http.get(this.URL + 'property', {params: params})
+  }
+
 }
