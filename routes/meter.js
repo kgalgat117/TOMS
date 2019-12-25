@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var PropertyModel = require('../models/property')
-var UserModel = require('../models/user')
 
 var verifyToken = require('./../controller/middleware').verifyToken
 
@@ -25,13 +24,6 @@ router.post('/', verifyToken, function (req, res) {
             res.status(200).json({
               result: created
             })
-            UserModel.findOneAndUpdate({
-              _id: mongoose.Types.ObjectId(req.user._id)
-            }, {
-              $push: {
-                properties: created._id
-              }
-            }).exec(function(err, updated){if(err && !updated){console.log(err || 'something went wrong while updating properties in user')}})
           } else {
             res.status(400).json({
               error: err || 'something went wrong !'

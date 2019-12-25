@@ -20,6 +20,14 @@ let userSchema = new mongoose.Schema({
         required: true,
         enum: ['owner', 'tenent']
     },
+    properties: {
+        type: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'properties'
+            }
+        ]
+    },
     created_on: {
         type: Date,
         default: Date.now()
