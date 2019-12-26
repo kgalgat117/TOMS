@@ -25,10 +25,15 @@
             <td>{{property.name}}</td>
             <td>{{property.created_on | date}}</td>
             <td>
-              <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Actions</button>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button (click)="editProperty(property)" ngbDropdownItem>Edit</button>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Actions
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" (click)="editProperty(property)">Edit</a>
+                  <a class="dropdown-item">Another action</a>
+                  <a class="dropdown-item">Something else here</a>
                 </div>
               </div>
             </td>

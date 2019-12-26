@@ -13,7 +13,6 @@ export class MeterComponent implements OnInit {
   metersParams: Object = {}
 
  
-
   constructor(private ownerService: OwnerService, private router: Router) {
     this.getMeters()
    }
@@ -21,8 +20,6 @@ export class MeterComponent implements OnInit {
    editMeter(meter){
     this.router.navigate(['/dashboard/meter/update'], {queryParams: {meter: meter._id}})
    }
-
-  
 
   getMeters(){
     this.ownerService.getMeters(this.metersParams).subscribe(resp=>{

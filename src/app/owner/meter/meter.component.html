@@ -16,6 +16,7 @@
             <th scope="col">Name</th>
             <th scope="col">Created On</th>
             <th scope="col">
+
             </th>
           </tr>
         </thead>
@@ -25,16 +26,42 @@
             <td>{{meter.name}}</td>
             <td>{{meter.created_on | date}}</td>
             <td>
-              <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Actions</button>
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button (click)="editMeter(meter)" ngbDropdownItem>Edit</button>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Actions
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" (click)="editMeter(meter)">Edit</a>
+                  <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">New Reading</a>
+                  <a class="dropdown-item">Something else here</a>
                 </div>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
   </div>
 </div>
