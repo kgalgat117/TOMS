@@ -22,7 +22,12 @@ let meterSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'properties',
         required: true
-    } 
+    },
+    created_by: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        required: true
+    }
 })
 
 let meterModel = DB.model('meters', meterSchema)

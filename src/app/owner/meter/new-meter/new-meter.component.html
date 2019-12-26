@@ -10,6 +10,12 @@
           <input [(ngModel)]="meter.name" name="name" type="text" class="form-control">
         </div>
         <div class="form-group col-md-3">
+          <label for="meter_type">Property</label>
+          <select class="custom-select" [(ngModel)]="meter.property" id="property" name="property">
+            <option *ngFor="let property of properties" value="{{property._id}}">{{property.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
           <label for="meter_type">Meter Type</label>
           <select class="custom-select" [(ngModel)]="meter.meter_type" id="meter_type" name="meter_type">
             <option value="domestic">Domestic</option>

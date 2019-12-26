@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var PropertyModel = require('../models/property')
+var MeterModel = require('../models/meter')
 
 var verifyToken = require('./../controller/middleware').verifyToken
 
@@ -8,18 +8,18 @@ var mongoose = require('mongoose')
 
 router.post('/', verifyToken, function (req, res) {
   let data = req.body
-  PropertyModel.countDocuments({
+  MeterModel.countDocuments({
     name: data.name,
-    owner: mongoose.Types.ObjectId(req.user._id)
+    property: mongoose.Types.ObjectId(req.body.property)
   }).exec(function (err, count) {
     if (!err) {
       if (count > 0) {
         res.status(400).json({
-          error: 'Name must be unique'
+          error: 'Name must be unique for each property'
         })
       } else {
-        data.owner = req.user._id
-        new PropertyModel(data).save(function (err, created) {
+        data.created_by = req.user._id
+        new MeterModel(data).save(function (err, created) {
           if (!err && created) {
             res.status(200).json({
               result: created
@@ -40,12 +40,14 @@ router.post('/', verifyToken, function (req, res) {
 })
 
 router.get('/all', verifyToken, function (req, res) {
-  PropertyModel.find({
-    owner: mongoose.Types.ObjectId(req.user._id)
-  }).exec(function (err, properties) {
-    if (!err && properties) {
+  MeterModel.find({
+    property: { 
+      $in: req.user.properties.map(item=> {return mongoose.Types.ObjectId(item)})
+     }
+  }).exec(function (err, meters) {
+    if (!err && meters) {
       res.status(200).json({
-        result: properties
+        result: meters
       })
     } else {
       res.status(400).json({
@@ -56,12 +58,12 @@ router.get('/all', verifyToken, function (req, res) {
 })
 
 router.get('/', verifyToken, function (req, res) {
-  PropertyModel.findOne({
-    _id: mongoose.Types.ObjectId(req.query.property)
-  }).exec(function (err, property) {
-    if (!err && property) {
+  MeterModel.findOne({
+    _id: mongoose.Types.ObjectId(req.query.meter)
+  }).exec(function (err, meter) {
+    if (!err && meter) {
       res.status(200).json({
-        result: property
+        result: meter
       })
     } else {
       res.status(400).json({
@@ -72,20 +74,17 @@ router.get('/', verifyToken, function (req, res) {
 })
 
 router.put('/', verifyToken, function (req, res) {
-  PropertyModel.findOneAndUpdate({
+  MeterModel.findOneAndUpdate({
     _id: mongoose.Types.ObjectId(req.body._id)
   }, {
     name: req.body.name,
-    address1: req.body.address1,
-    address2: req.body.address2,
-    country: req.body.country,
-    state: req.body.state,
-    city: req.body.city,
-    pincode: req.body.pincode,
-  }, {new: true}).exec(function (err, property) {
-    if (!err && property) {
+    rate_per_unit: req.body.rate_per_unit,
+    meter_type: req.body.meter_type,
+    property: req.body.property
+  }, {new: true}).exec(function (err, meter) {
+    if (!err && meter) {
       res.status(200).json({
-        result: property
+        result: meter
       })
     } else {
       res.status(400).json({

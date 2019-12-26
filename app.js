@@ -12,6 +12,7 @@ DB.on('connected', function () {
 })
 
 var propertyRouter = require('./routes/property');
+var meterRouter = require('./routes/meter');
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'angular/dist/job')))
 
 app.use('/property', propertyRouter);
+app.use('/meter', meterRouter);
 app.use('/user', usersRouter);
 
 
