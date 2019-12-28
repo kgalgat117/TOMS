@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { OwnerRoutingModule, OwnerRoutingComponents } from './owner-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import {MatInputModule} from '@angular/material/input';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -11,7 +14,11 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     OwnerRoutingModule,
-    SharedModule
+    SharedModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatRippleModule
   ]
 })
 export class OwnerModule { }
