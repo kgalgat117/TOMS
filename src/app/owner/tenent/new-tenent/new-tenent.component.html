@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="row">
+    <h2>Add New Tenent</h2>
+  </div>
+  <div class="row">
+    <div class="container-fluid">
+      <form>
+        <div class="form-group col-md-3">
+          <label for="">Name</label>
+          <input [(ngModel)]="tenent.name" name="name" type="text" class="form-control">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="meter_type">Meter Type</label>
+          <select class="custom-select" [(ngModel)]="tenent.meter_type" id="meter_type" name="meter_type">
+            <option value="domestic">Domestic</option>
+            <option value="commercial">Commercial</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="rate_per_unit">Electricity Rate Per Unit</label>
+          <input [(ngModel)]="tenent.e_rate_per_unit" id="e_rate_per_unit" name="rate_per_unit" type="number"
+            class="form-control">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="monthly_rent">Monthly Rent</label>
+            <input [(ngModel)]="tenent.monthly_rent" id="monthly_rent" name="monthly_rent" type="number"
+              class="form-control">
+          </div>
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <button routerLink="/dashboard/tenent" class="btn btn-primary">Cancel</button>
+          </div>
+          <div class="form-group col-md-3">
+            <button *ngIf="!tenentParams.tenent" [disabled]="!validateTenentData()" (click)="newTenent()" type="submit"
+              class="btn btn-primary">Add</button>
+            <button *ngIf="tenentParams.tenent" [disabled]="!validateTenentData()" (click)="updateTenent()" type="submit"
+              class="btn btn-primary">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

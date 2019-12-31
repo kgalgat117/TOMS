@@ -43,4 +43,20 @@ export class OwnerService {
     return this.http.get(this.URL + 'meter', {params: params})
   }
 
+  makeNewTenent(data, params){
+    return this.http.post(this.URL + 'tenent', data, {params: params})
+  }
+
+  getTenents(params){
+    return this.http.get(this.URL + 'tenent/all', {params: params})
+  }
+
+  updateTenent(data, params){
+    return this.http.put(this.URL + 'tenent', data, {params: params})
+  }
+
+  getTenent(params){
+    return this.http.get(this.URL + 'tenent', {params: params})
+  }
+
 }

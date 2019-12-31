@@ -9,7 +9,7 @@ import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
-    OwnerRoutingComponents,
+    OwnerRoutingComponents
   ],
   imports: [
     CommonModule,

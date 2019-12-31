@@ -29,6 +29,7 @@ export class MeterComponent implements OnInit {
       console.log(err)
     })
   }
+  
   ngOnInit() {
   }
 
