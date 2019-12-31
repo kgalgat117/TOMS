@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var UserModel = require('../models/user')
+var IncomeModel = require('../models/income')
 
 var verifyToken = require('./../controller/middleware').verifyToken
 
@@ -76,6 +77,37 @@ router.put('/', verifyToken, function (req, res) {
       })
     }
   })
+})
+
+router.post('/payment', verifyToken, function (req, res) {
+    let data = req.body
+    data.owner = req.user._id,
+    new IncomeModel(data).save(function(err, created){
+        if(!err && created){
+            res.status(200).json({result: created})
+        }else{
+            res.status(400).json({error: err || 'something went wrong'})
+        }
+    })    
+})
+
+router.get('/payments', verifyToken, function(req,res){
+    let filter = {}
+    if(req.user.role == 'owner'){
+        filter.owner = mongoose.Types.ObjectId(req.user._id)
+        if(req.query.tenent){
+            filter.tenent = mongoose.Types.ObjectId(req.query.tenent)
+        }
+    }else{
+        filter.tenent = mongoose.Types.ObjectId(req.user._id)
+    }
+    IncomeModel.find(filter).exec(function(err, payments){
+        if(!err && payments){
+            res.status(200).json({result: payments})
+        }else{
+            res.status(400).json({error: err || 'something went wrong'})
+        }
+    })
 })
 
 module.exports = router;
