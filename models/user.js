@@ -15,6 +15,14 @@ let userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    tenent_properties: {
+        type: {
+            e_rate_per_unit: Number,
+            meter_type: {type: String, enum: ['domestic', 'commercial']},
+            monthly_rent: Number,
+            owner: {type: mongoose.Schema.Types.ObjectId, ref: 'users'}
+        }
+    },
     role: {
         type: String,
         required: true,

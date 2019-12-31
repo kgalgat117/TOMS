@@ -9,7 +9,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class NewTenentComponent implements OnInit {
 
-  tenent: any = {}
+  tenent: any = {
+    tenent_properties: {}
+  }
   tenentParams: any = {}
 
   constructor(private OwnerService: OwnerService, private router: Router, private activeRoute: ActivatedRoute) {
@@ -51,7 +53,7 @@ export class NewTenentComponent implements OnInit {
   }
 
   validateTenentData(){
-    if(this.tenent.name && this.tenent.meter_type && this.tenent.e_rate_per_unit && this.tenent.monthly_rent){
+    if(this.tenent.name && this.tenent.tenent_properties.meter_type && this.tenent.tenent_properties.e_rate_per_unit && this.tenent.tenent_properties.monthly_rent){
       return true
     }
     return false
