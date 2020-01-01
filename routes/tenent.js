@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var UserModel = require('../models/user')
 var IncomeModel = require('../models/income')
+var ReadingModel = require('../models/reading')
 
 var verifyToken = require('./../controller/middleware').verifyToken
 
@@ -89,6 +90,18 @@ router.post('/payment', verifyToken, function (req, res) {
             res.status(400).json({error: err || 'something went wrong'})
         }
     })    
+})
+
+router.post('/reading', verifyToken, function (req, res) {
+  let data = req.body
+  data.owner = req.user._id,
+  new ReadingModel(data).save(function(err, created){
+      if(!err && created){
+          res.status(200).json({result: created})
+      }else{
+          res.status(400).json({error: err || 'something went wrong'})
+      }
+  })    
 })
 
 router.get('/payments', verifyToken, function(req,res){

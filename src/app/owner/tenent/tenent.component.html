@@ -100,7 +100,7 @@
             <div class="form-row">
               <div class="form-group col-md-5">
                 <mat-form-field>
-                  <input [(ngModel)]="new_reading.taken_on" name="paid_on" matInput [matDatepicker]="reading_picker" placeholder="Choose a date">
+                  <input [(ngModel)]="new_reading.taken_on" name="taken_on" matInput [matDatepicker]="reading_picker" placeholder="Choose a date">
                   <mat-datepicker-toggle matSuffix [for]="reading_picker"></mat-datepicker-toggle>
                   <mat-datepicker #reading_picker></mat-datepicker>
                 </mat-form-field>
@@ -108,7 +108,7 @@
             </div>
             <div class="form-row">
               <div class="form-group col-md-5">
-                <label for="">Amount</label>
+                <label for="">Reading</label>
                 <input [(ngModel)]="new_reading.reading" type="number" name="amount" >
               </div>
             </div>

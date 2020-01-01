@@ -35,10 +35,10 @@ export class TenentComponent implements OnInit {
    }
 
    newReading(){
-    this.ownerService.tenentPaid(this.new_reading).subscribe(resp=>{
+    this.ownerService.tenentReading(this.new_reading).subscribe(resp=>{
       console.log(resp)
-      this.new_payment.reading = null,
-       this.new_payment.taken_on = null
+      this.new_reading.reading = null,
+       this.new_reading.taken_on = null
     }, err=>{
       console.log(err)
     })
