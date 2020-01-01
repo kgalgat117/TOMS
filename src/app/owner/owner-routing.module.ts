@@ -11,12 +11,12 @@ import { NewTenentComponent } from './tenent/new-tenent/new-tenent.component';
 
 const routes: Routes = [
     { path: '', component: OwnerComponent, children: [
-        {path: 'property', component: PropertyComponent },
-        {path: 'property/new', component: NewPropertyComponent },
-        {path: 'property/update', component: NewPropertyComponent },
-        {path: 'meter', component: MeterComponent },
-        {path: 'meter/new', component: NewMeterComponent },
-        {path: 'meter/update', component: NewMeterComponent },
+        // {path: 'property', component: PropertyComponent },
+        // {path: 'property/new', component: NewPropertyComponent },
+        // {path: 'property/update', component: NewPropertyComponent },
+        // {path: 'meter', component: MeterComponent },
+        // {path: 'meter/new', component: NewMeterComponent },
+        // {path: 'meter/update', component: NewMeterComponent },
         {path: 'tenent', component: TenentComponent },
         {path: 'tenent/new', component: NewTenentComponent },
         {path: 'tenent/update', component: NewTenentComponent },
@@ -31,10 +31,10 @@ export class OwnerRoutingModule { }
 
 export const OwnerRoutingComponents = [
     OwnerComponent,
-    PropertyComponent,
-    NewPropertyComponent,
-    MeterComponent,
-    NewMeterComponent,
+    // PropertyComponent,
+    // NewPropertyComponent,
+    // MeterComponent,
+    // NewMeterComponent,
     TenentComponent,
     NewTenentComponent
 ]
