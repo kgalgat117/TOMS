@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/shared.module';
-
+declare var $: any;
 
 @Component({
     selector: 'owner-home',
@@ -11,6 +11,14 @@ import { AuthService } from '../shared/shared.module';
 export class OwnerComponent implements OnInit {
 
     constructor(private authService: AuthService) { }
+
+    toggle() {
+        $("body").toggleClass("sidebar-toggled");
+        $(".sidebar").toggleClass("toggled");
+        if ($(".sidebar").hasClass("toggled")) {
+            $('.sidebar .collapse').collapse('hide');
+        };
+    }
 
     signOut() {
         this.authService.logoutUser()
