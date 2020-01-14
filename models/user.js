@@ -16,19 +16,21 @@ let userSchema = new mongoose.Schema({
         required: true
     },
     tenent_properties: {
-        type: {
+        type: [{
             e_rate_per_unit: Number,
             meter_type: {type: String, enum: ['domestic', 'commercial']},
             monthly_rent: Number,
-            owner: {type: mongoose.Schema.Types.ObjectId, ref: 'users'}
-        }
+            owner: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
+            property: {type: mongoose.Schema.Types.ObjectId, ref: 'properties'},
+            created_on: {type: Date, default: Date.now()}
+        }]
     },
     role: {
         type: String,
         required: true,
         enum: ['owner', 'tenent']
     },
-    properties: {
+    owner_properties: {
         type: [
             {
                 type: mongoose.Schema.Types.ObjectId,

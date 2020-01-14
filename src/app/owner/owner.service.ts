@@ -11,6 +11,10 @@ export class OwnerService {
 
   URL = 'http://localhost:4200/'
 
+  assignPropertyTenent(data){
+    return this.http.post(this.URL + 'property/tenent', data)
+  }
+
   makeNewProperty(data, params){
     return this.http.post(this.URL + 'property', data, {params: params})
   }

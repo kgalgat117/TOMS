@@ -11,30 +11,14 @@
             <input [(ngModel)]="property.name" name="name" type="text" class="form-control">
           </div>
         </div>
-        <div class="form-group">
-          <label for="inputAddress">Address</label>
-          <input [(ngModel)]="property.address1" name="address1" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
-        <div class="form-group">
-          <label for="inputAddress2">Address 2</label>
-          <input [(ngModel)]="property.address2" name="address2" type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-        </div>
         <div class="form-row">
-          <div class="form-group col-md-3">
-            <label for="inputCity">City</label>
-            <input [(ngModel)]="property.city" name="city" type="text" class="form-control" id="inputCity">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="inputState">State</label>
-            <input [(ngModel)]="property.state" name="state" type="text" class="form-control" id="inputState">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="inputCountry">Country</label>
-            <input [(ngModel)]="property.country" name="country" type="text" class="form-control" id="inputCountry">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="inputZip">Zip</label>
-            <input [(ngModel)]="property.pincode" name="pincode" type="text" class="form-control" id="inputZip">
+          <div class="form-group">
+            <label for="">Category</label>
+            <select class="form-control" [(ngModel)]="property.category" name="category">
+              <option value="bed">Bed</option>
+              <option value="room">Room</option>
+              <option value="flat">Flat</option>
+            </select>
           </div>
         </div>
         <div class="form-row">

@@ -27,7 +27,11 @@ router.post('/', verifyToken, function (req, res) {
 
 router.get('/all', verifyToken, function (req, res) {
   UserModel.find({
-    'tenent_properties.owner': mongoose.Types.ObjectId(req.user._id)
+    'tenent_properties':  {
+      $elemMatch: {
+        owner: mongoose.Types.ObjectId(req.user._id)
+      }
+    }                   
   }).exec(function (err, tenents) {
     if (!err && tenents) {
       res.status(200).json({

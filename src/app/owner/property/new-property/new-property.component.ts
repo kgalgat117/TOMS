@@ -11,12 +11,7 @@ export class NewPropertyComponent implements OnInit {
 
   property: any = {
     name: '',
-    address1: '',
-    address2: '',
-    state: '',
-    city: '',
-    country: '',
-    pincode: ''
+    category: '',
   }
   propertyParams: any = {
 
@@ -61,7 +56,7 @@ export class NewPropertyComponent implements OnInit {
   }
 
   validatePropertyData(){
-    if(this.property.name && this.property.address1 && this.property.address2 && this.property.city && this.property.state && this.property.country && this.property.pincode){
+    if(this.property.name && this.property.category){
       return true
     }
     return false
@@ -69,12 +64,3 @@ export class NewPropertyComponent implements OnInit {
 
 }
 
-interface PropertyInterface {
-  name: string,
-  address1: string,
-  address2: string,
-  country: string,
-  state: string,
-  city: string,
-  pincode: string
-}

@@ -14,6 +14,7 @@
           <tr>
             <th scope="col">S.No.</th>
             <th scope="col">Name</th>
+            <th scope="col">Tenent</th>
             <th scope="col">Created On</th>
             <th scope="col">
             </th>
@@ -23,6 +24,8 @@
           <tr *ngFor="let property of properties; let i = index">
             <th scope="row">{{i + 1}}</th>
             <td>{{property.name}}</td>
+            <td *ngIf="property.tenent">{{property.tenent.name}}</td>
+            <td *ngIf="!property.tenent">No Tenent</td>
             <td>{{property.created_on | date}}</td>
             <td>
               <div class="dropdown">
@@ -32,7 +35,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" (click)="editProperty(property)">Edit</a>
-                  <a class="dropdown-item">Another action</a>
+                  <a class="dropdown-item" (click)="updateTenentData(property)" data-toggle="modal" data-target="#paymentModal">Assign Tenent</a>
                   <a class="dropdown-item">Something else here</a>
                 </div>
               </div>
@@ -40,6 +43,58 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Assign Tenent</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-5">
+                <label for="">Tenent Email</label>
+                <input type="email" [(ngModel)]="newTenent.email" name="email" >
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-5">
+                <label for="">Tenent Rent</label>
+                <input type="number" [(ngModel)]="newTenent.rent" name="rent" >
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-5">
+                <label for="">Tenent Meter Type</label>
+                <select [(ngModel)]="newTenent.meter_type" name="meter_type">
+                  <option value="domestic">Domestic</option>
+                  <option value="commercial">Commercial</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-5">
+                <label for="">Electricity Per Unit</label>
+                <input type="number" [(ngModel)]="newTenent.e_rate_per_unit" name="e_rate_per_unit" >
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button [disabled]="!validateNewTenentData()" (click)="assignTenent()" type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
   </div>
 </div>

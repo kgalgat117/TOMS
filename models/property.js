@@ -11,28 +11,12 @@ let propertySchema = new mongoose.Schema({
         ref: 'users',
         required: true
     },
-    address1: {
-        type: String,
-        required: true
+    tenent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
     },
-    address2: {
+    category: {
         type: String,
-        required: true
-    },
-    country: {
-        type: String,
-        required: true
-    },
-    state: {
-        type: String,
-        required: true
-    },
-    city: {
-        type: String,
-        required: true
-    },
-    pincode: {
-        type: Number,
         required: true
     },
     created_on: {
