@@ -103,52 +103,45 @@ router.put('/', verifyToken, function (req, res) {
 })
 
 router.post('/tenent', verifyToken, function (req, res) {
-  UserModel.findOne({
-    email: req.body.email
-  }).exec(function (err, foundTenent) {
-    if (!err && foundTenent) {
-      PropertyModel.findOneAndUpdate({
-        _id: mongoose.Types.ObjectId(req.body.property)
-      }, {
-        tenent: foundTenent._id
-      }, {
-        new: true
-      }).exec(function (err, updatedProperty) {
-        if (!err && updatedProperty) {
-          res.status(200).json({ result: updatedProperty })
-          let index = foundTenent.tenent_properties.findIndex(item=>{
-            if(item.property == req.body.property){
-              return true
-            }
-            return false
-          })
-          if(index == -1){
-            foundTenent.tenent_properties.push({
-              e_rate_per_unit: req.body.e_rate_per_unit,
-              meter_type: req.body.meter_type,
-              monthly_rent: req.body.rent,
-              owner: req.user._id,
-              property: req.body.property
-            })
-            console.log(foundTenent)
-            foundTenent.save(function (err, updatedTenent) {
-              if (!err && updatedTenent) {
-                console.log('tenent updated')
-              } else {
-                console.log('something went wrong here', err)
-              }
-            })
-          }
-        } else {
-          res.status(400).json({ error: err || 'something went wrong' })
-        }
-      })
+  PropertyModel.findOneAndUpdate({
+    _id: mongoose.Types.ObjectId(req.body.property)
+  }, {
+    $addToSet: {
+      tenent: req.body.tenent
+    }
+  }, {
+    new: true
+  }).populate({
+    path: 'tenent',
+    model: UserModel,
+    select: '_id name email'
+  }).exec(function (err, updatedProperty) {
+    if (!err && updatedProperty) {
+      res.status(200).json({ result: updatedProperty })
     } else {
-      if (err) {
-        res.status(400).json({ error: err })
-      } else {
-        res.status(404).json({ error: 'tenent not found' })
-      }
+      res.status(400).json({ error: err || 'something went wrong' })
+    }
+  })
+})
+
+router.delete('/tenent', verifyToken, function (req, res) {
+  PropertyModel.findOneAndUpdate({
+    _id: mongoose.Types.ObjectId(req.query.property)
+  }, {
+    $pull: {
+      tenent: req.query.tenent
+    }
+  }, {
+    new: true
+  }).populate({
+    path: 'tenent',
+    model: UserModel,
+    select: '_id name email'
+  }).exec(function (err, updatedProperty) {
+    if (!err && updatedProperty) {
+      res.status(200).json({ result: updatedProperty })
+    } else {
+      res.status(400).json({ error: err || 'something went wrong' })
     }
   })
 })

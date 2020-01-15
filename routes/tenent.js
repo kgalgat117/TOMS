@@ -10,8 +10,11 @@ var mongoose = require('mongoose')
 
 router.post('/', verifyToken, function (req, res) {
   let data = req.body
-  data.tenent_properties.owner = req.user._id
+  // if(data.tenent_properties.property){
+    data.tenent_properties.owner = req.user._id
+  // }
   data.role = 'tenent'
+  data.created_by = req.user._id
   new UserModel(data).save(function (err, created) {
     if (!err && created) {
       res.status(200).json({
@@ -27,11 +30,7 @@ router.post('/', verifyToken, function (req, res) {
 
 router.get('/all', verifyToken, function (req, res) {
   UserModel.find({
-    'tenent_properties':  {
-      $elemMatch: {
-        owner: mongoose.Types.ObjectId(req.user._id)
-      }
-    }                   
+    'created_by': mongoose.Types.ObjectId(req.user._id)
   }).exec(function (err, tenents) {
     if (!err && tenents) {
       res.status(200).json({
@@ -85,46 +84,46 @@ router.put('/', verifyToken, function (req, res) {
 })
 
 router.post('/payment', verifyToken, function (req, res) {
-    let data = req.body
-    data.owner = req.user._id,
-    new IncomeModel(data).save(function(err, created){
-        if(!err && created){
-            res.status(200).json({result: created})
-        }else{
-            res.status(400).json({error: err || 'something went wrong'})
-        }
-    })    
+  let data = req.body
+  data.owner = req.user._id,
+    new IncomeModel(data).save(function (err, created) {
+      if (!err && created) {
+        res.status(200).json({ result: created })
+      } else {
+        res.status(400).json({ error: err || 'something went wrong' })
+      }
+    })
 })
 
 router.post('/reading', verifyToken, function (req, res) {
   let data = req.body
   data.owner = req.user._id,
-  new ReadingModel(data).save(function(err, created){
-      if(!err && created){
-          res.status(200).json({result: created})
-      }else{
-          res.status(400).json({error: err || 'something went wrong'})
+    new ReadingModel(data).save(function (err, created) {
+      if (!err && created) {
+        res.status(200).json({ result: created })
+      } else {
+        res.status(400).json({ error: err || 'something went wrong' })
       }
-  })    
+    })
 })
 
-router.get('/payments', verifyToken, function(req,res){
-    let filter = {}
-    if(req.user.role == 'owner'){
-        filter.owner = mongoose.Types.ObjectId(req.user._id)
-        if(req.query.tenent){
-            filter.tenent = mongoose.Types.ObjectId(req.query.tenent)
-        }
-    }else{
-        filter.tenent = mongoose.Types.ObjectId(req.user._id)
+router.get('/payments', verifyToken, function (req, res) {
+  let filter = {}
+  if (req.user.role == 'owner') {
+    filter.owner = mongoose.Types.ObjectId(req.user._id)
+    if (req.query.tenent) {
+      filter.tenent = mongoose.Types.ObjectId(req.query.tenent)
     }
-    IncomeModel.find(filter).exec(function(err, payments){
-        if(!err && payments){
-            res.status(200).json({result: payments})
-        }else{
-            res.status(400).json({error: err || 'something went wrong'})
-        }
-    })
+  } else {
+    filter.tenent = mongoose.Types.ObjectId(req.user._id)
+  }
+  IncomeModel.find(filter).exec(function (err, payments) {
+    if (!err && payments) {
+      res.status(200).json({ result: payments })
+    } else {
+      res.status(400).json({ error: err || 'something went wrong' })
+    }
+  })
 })
 
 module.exports = router;

@@ -24,8 +24,21 @@
           <tr *ngFor="let property of properties; let i = index">
             <th scope="row">{{i + 1}}</th>
             <td>{{property.name}}</td>
-            <td *ngIf="property.tenent">{{property.tenent.name}}</td>
-            <td *ngIf="!property.tenent">No Tenent</td>
+            <td *ngIf="property.tenent.length > 0">
+              <div class="container-fluid align-items-center">
+                <div *ngFor="let tenent of property.tenent; let j = index" class="row">
+                  <div class="col-md-2">
+                    <span>{{tenent.name}}</span>
+                  </div>
+                  <div class="col-md-1 ">
+                    <button (click)="deleteTenent(property, tenent, i)" type="button" class="close" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td *ngIf="property.tenent.length == 0">No Tenent</td>
             <td>{{property.created_on | date}}</td>
             <td>
               <div class="dropdown">
@@ -35,7 +48,8 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" (click)="editProperty(property)">Edit</a>
-                  <a class="dropdown-item" (click)="updateTenentData(property)" data-toggle="modal" data-target="#paymentModal">Assign Tenent</a>
+                  <a class="dropdown-item" (click)="updateTenentData(property, i)" data-toggle="modal"
+                    data-target="#paymentModal">Assign Tenent</a>
                   <a class="dropdown-item">Something else here</a>
                 </div>
               </div>
@@ -63,11 +77,15 @@
           <form>
             <div class="form-row">
               <div class="form-group col-md-5">
-                <label for="">Tenent Email</label>
-                <input type="email" [(ngModel)]="newTenent.email" name="email" >
+                <label for="">Select Tenent</label>
+                <select class="form-control" [(ngModel)]="newTenent.tenent" name="tenent">
+                  <!-- <option value="">Select Tenent</option> -->
+                  <option *ngFor="let tenent of tenents" value="{{tenent._id}}">{{tenent.name}}</option>
+                </select>
+                <!-- <input type="email" [(ngModel)]="newTenent.email" name="email" > -->
               </div>
             </div>
-            <div class="form-row">
+            <!-- <div class="form-row">
               <div class="form-group col-md-5">
                 <label for="">Tenent Rent</label>
                 <input type="number" [(ngModel)]="newTenent.rent" name="rent" >
@@ -87,13 +105,14 @@
                 <label for="">Electricity Per Unit</label>
                 <input type="number" [(ngModel)]="newTenent.e_rate_per_unit" name="e_rate_per_unit" >
               </div>
-            </div>
+            </div> -->
           </form>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button [disabled]="!validateNewTenentData()" (click)="assignTenent()" type="button" class="btn btn-primary">Save changes</button>
+        <button [disabled]="!validateNewTenentData()" (click)="assignTenent()" type="button"
+          class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

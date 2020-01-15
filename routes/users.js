@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var UserModel = require('./../models/user')
 
+var validateUserSignUpData = require('./../controller/middleware').validateUserSignUpData
 
 const jwt = require('jsonwebtoken')
 var mongoose = require('mongoose')
@@ -17,7 +18,7 @@ router.get('/guard', async function (req, res) {
   res.send(data)
 })
 
-router.post('/signup', function (req, res) {
+router.post('/signup', validateUserSignUpData, function (req, res) {
   // bcrypt.genSalt(saltRounds, function (err, salt) {
   //   if (err) {
   //     res.status(400).json({
@@ -30,7 +31,8 @@ router.post('/signup', function (req, res) {
     name: req.body.name,
     email: req.body.email,
     role: req.body.role,
-    password: req.body.password
+    password: req.body.password,
+    phone: req.body.phone
   }
   let dataUpdate = new UserModel(data)
   dataUpdate.save(function (err, createdUser) {
@@ -98,7 +100,6 @@ router.post('/signin', function (req, res) {
 })
 
 module.exports = router;
-
 
 async function tokenValidity(req, res) {
   var stat = {};

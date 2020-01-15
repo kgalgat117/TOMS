@@ -11,10 +11,10 @@ let propertySchema = new mongoose.Schema({
         ref: 'users',
         required: true
     },
-    tenent: {
+    tenent: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
-    },
+    }],
     category: {
         type: String,
         required: true
