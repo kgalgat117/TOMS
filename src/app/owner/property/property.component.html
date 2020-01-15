@@ -31,7 +31,8 @@
                     <span>{{tenent.name}}</span>
                   </div>
                   <div class="col-md-1 ">
-                    <button (click)="deleteTenent(property, tenent, i)" type="button" class="close" aria-label="Close">
+                    <button (click)="updateDeleteModal(property, tenent, i)" data-toggle="modal"
+                      data-target="#deleteModal" type="button" class="close" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
@@ -79,33 +80,10 @@
               <div class="form-group col-md-5">
                 <label for="">Select Tenent</label>
                 <select class="form-control" [(ngModel)]="newTenent.tenent" name="tenent">
-                  <!-- <option value="">Select Tenent</option> -->
                   <option *ngFor="let tenent of tenents" value="{{tenent._id}}">{{tenent.name}}</option>
                 </select>
-                <!-- <input type="email" [(ngModel)]="newTenent.email" name="email" > -->
               </div>
             </div>
-            <!-- <div class="form-row">
-              <div class="form-group col-md-5">
-                <label for="">Tenent Rent</label>
-                <input type="number" [(ngModel)]="newTenent.rent" name="rent" >
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-5">
-                <label for="">Tenent Meter Type</label>
-                <select [(ngModel)]="newTenent.meter_type" name="meter_type">
-                  <option value="domestic">Domestic</option>
-                  <option value="commercial">Commercial</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-5">
-                <label for="">Electricity Per Unit</label>
-                <input type="number" [(ngModel)]="newTenent.e_rate_per_unit" name="e_rate_per_unit" >
-              </div>
-            </div> -->
           </form>
         </div>
       </div>
@@ -113,6 +91,29 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button [disabled]="!validateNewTenentData()" (click)="assignTenent()" type="button"
           class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Tenent</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <h3>Are You Sure To Delete This Entry ?</h3>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button (click)="deleteTenent()" type="button" class="btn btn-danger">Delete</button>
       </div>
     </div>
   </div>

@@ -22,6 +22,8 @@ export class PropertyComponent implements OnInit {
   tenents: Array<object> = []
   tenentsParams: Object = {}
 
+  delete_data: any = {}
+
   constructor(private ownerService: OwnerService, private router: Router) {
     this.getProperties()
     this.getTenents()
@@ -41,10 +43,20 @@ export class PropertyComponent implements OnInit {
     })
   }
 
-  deleteTenent(property, tenent, property_index) {
-    this.ownerService.removePropertyTenent({ property: property._id, tenent: tenent._id }).subscribe(resp => {
-      this.properties[property_index] = resp['result']
+  deleteTenent() {
+    this.ownerService.removePropertyTenent({ property: this.delete_data.property._id, tenent: this.delete_data.tenent._id }).subscribe(resp => {
+      this.properties[this.delete_data.property_index] = resp['result']
+      $('#deleteModal').modal('hide')
+    }, err => {
+      console.log(err)
+      $('#deleteModal').modal('hide')
     })
+  }
+
+  updateDeleteModal(property, tenent, property_index) {
+    this.delete_data.property = property
+    this.delete_data.tenent = tenent
+    this.delete_data.property_index = property_index
   }
 
   assignTenent() {
