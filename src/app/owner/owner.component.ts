@@ -20,6 +20,10 @@ export class OwnerComponent implements OnInit {
         };
     }
 
+    logout(){
+        this.authService.logoutUser()
+    }
+
     signOut() {
         this.authService.logoutUser()
     }

@@ -11,7 +11,7 @@ var mongoose = require('mongoose')
 router.post('/', verifyToken, function (req, res) {
   let data = req.body
   // if(data.tenent_properties.property){
-    data.tenent_properties.owner = req.user._id
+  data.tenent_properties.owner = req.user._id
   // }
   data.role = 'tenent'
   data.created_by = req.user._id
@@ -95,6 +95,27 @@ router.post('/payment', verifyToken, function (req, res) {
     })
 })
 
+router.put('/payment', verifyToken, function (req, res) {
+  let data = req.body
+  IncomeModel.findOneAndUpdate({
+    _id: mongoose.Types.ObjectId(data._id)
+  }, {
+    paid_on: data.paid_on,
+    amount: data.amount,
+    remarks: data.remarks
+  }, { new: true }).populate({
+    path: 'tenent',
+    model: UserModel,
+    select: '_id name'
+  }).exec(function (err, updated) {
+    if (!err && updated) {
+      res.status(200).json({ result: updated })
+    } else {
+      res.status(400).json({ error: err || 'something went wrong' })
+    }
+  })
+})
+
 router.post('/reading', verifyToken, function (req, res) {
   let data = req.body
   data.owner = req.user._id,
@@ -117,7 +138,11 @@ router.get('/payments', verifyToken, function (req, res) {
   } else {
     filter.tenent = mongoose.Types.ObjectId(req.user._id)
   }
-  IncomeModel.find(filter).exec(function (err, payments) {
+  IncomeModel.find(filter).populate({
+    path: 'tenent',
+    model: UserModel,
+    select: '_id name'
+  }).sort({ paid_on: -1 }).exec(function (err, payments) {
     if (!err && payments) {
       res.status(200).json({ result: payments })
     } else {

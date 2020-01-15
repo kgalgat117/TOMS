@@ -20,9 +20,12 @@ let incomeSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    paid_on : {
+    paid_on: {
         type: Date,
         required: true
+    },
+    remarks: {
+        type: String
     }
 })
 

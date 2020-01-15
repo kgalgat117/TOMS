@@ -33,8 +33,10 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" (click)="editTenent(tenent)">Edit</a>
-                  <a class="dropdown-item" (click)="updateTenent(tenent)" data-toggle="modal" data-target="#paymentModal">New Payment</a>
-                  <a class="dropdown-item" (click)="updateTenent(tenent)" data-toggle="modal" data-target="#readingModal">New Reading</a>
+                  <a class="dropdown-item" (click)="updateTenent(tenent)" data-toggle="modal"
+                    data-target="#paymentModal">New Payment</a>
+                  <a class="dropdown-item" (click)="updateTenent(tenent)" data-toggle="modal"
+                    data-target="#readingModal">New Reading</a>
                 </div>
               </div>
             </td>
@@ -61,7 +63,8 @@
             <div class="form-row">
               <div class="form-group col-md-5">
                 <mat-form-field>
-                  <input [(ngModel)]="new_payment.paid_on" name="paid_on" matInput [matDatepicker]="picker" placeholder="Choose a date">
+                  <input [(ngModel)]="new_payment.paid_on" name="paid_on" matInput [matDatepicker]="picker"
+                    placeholder="Choose a date">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -70,8 +73,13 @@
             <div class="form-row">
               <div class="form-group col-md-5">
                 <label for="">Amount</label>
-                <input [(ngModel)]="new_payment.amount" type="number" name="amount" >
+                <input class="form-control" [(ngModel)]="new_payment.amount" type="number" name="amount">
               </div>
+            </div>
+            <div class="form-row">
+              <label for="">Remarks</label>
+              <textarea name="remarks" class="form-control" [(ngModel)]="new_payment.remarks" cols="30"
+                rows="5"></textarea>
             </div>
           </form>
         </div>
@@ -100,7 +108,8 @@
             <div class="form-row">
               <div class="form-group col-md-5">
                 <mat-form-field>
-                  <input [(ngModel)]="new_reading.taken_on" name="taken_on" matInput [matDatepicker]="reading_picker" placeholder="Choose a date">
+                  <input [(ngModel)]="new_reading.taken_on" name="taken_on" matInput [matDatepicker]="reading_picker"
+                    placeholder="Choose a date">
                   <mat-datepicker-toggle matSuffix [for]="reading_picker"></mat-datepicker-toggle>
                   <mat-datepicker #reading_picker></mat-datepicker>
                 </mat-form-field>
@@ -109,7 +118,7 @@
             <div class="form-row">
               <div class="form-group col-md-5">
                 <label for="">Reading</label>
-                <input [(ngModel)]="new_reading.reading" type="number" name="amount" >
+                <input [(ngModel)]="new_reading.reading" type="number" name="amount">
               </div>
             </div>
           </form>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OwnerService } from '../owner.service';
 import { Router } from '@angular/router';
-import { prepareSyntheticPropertyName } from '@angular/compiler/src/render3/util';
 
 declare var $: any;
 

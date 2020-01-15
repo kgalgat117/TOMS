@@ -1,0 +1,127 @@
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Payments</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div style="height: 100px;" class="col-md-3 card shadow align-items-center">
+                <div class="row">
+                    <h3 class="h4 mb-2 text-gray-800">Total Amount Recieved</h3>
+                </div>
+                <div class="row">
+                    <h5>{{overview.total}}</h5>
+                </div>
+            </div>
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-3 card shadow align-items-center">
+                <div class="row">
+                    <h3 class="h3 mb-2 text-gray-800">Last Amount Recieved</h3>
+                </div>
+                <div class="row">
+                    <h5 *ngIf="payments[0]">{{payments[0].amount}}</h5>
+                    <h5 *ngIf="!payments[0]">-</h5>
+                </div>
+            </div>
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-3 card shadow align-items-center">
+                <div class="row">
+                    <h3 class="h3 mb-2 text-gray-800">Last Amount Recieved Date</h3>
+                </div>
+                <div class="row">
+                    <h5 *ngIf="payments[0]">{{payments[0].paid_on | date}}</h5>
+                    <h5 *ngIf="!payments[0]">-</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Tenent</th>
+                            <th>Amount</th>
+                            <th>Paid Date</th>
+                            <th>Remarks</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let payment of payments; let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{payment.tenent.name}}</td>
+                            <td>{{payment.amount}}</td>
+                            <td>{{payment.paid_on | date}}</td>
+                            <td>{{payment.remarks}}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a (click)="updatePaymentModal(payment, i)" class="dropdown-item"
+                                            data-toggle="modal" data-target="#paymentModal">Edit</a>
+                                        <a class="dropdown-item">Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Reading</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <mat-form-field>
+                                    <input [(ngModel)]="selected_payment.paid_on" name="paid_on" matInput
+                                        [matDatepicker]="picker" placeholder="Choose a date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <label for="">Amount</label>
+                                <input class="form-control" [(ngModel)]="selected_payment.amount" type="number"
+                                    name="amount">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label for="">Remarks</label>
+                            <textarea name="remarks" class="form-control" [(ngModel)]="selected_payment.remarks"
+                                cols="30" rows="5"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button (click)="paymentUpdated()" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

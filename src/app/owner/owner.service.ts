@@ -71,6 +71,14 @@ export class OwnerService {
     return this.http.post(this.URL + 'tenent/payment', data)
   }
 
+  tenentPaymentUpdate(data) {
+    return this.http.put(this.URL + 'tenent/payment', data)
+  }
+
+  tenentPayments(params) {
+    return this.http.get(this.URL + 'tenent/payments', { params: params })
+  }
+
   tenentReading(data) {
     return this.http.post(this.URL + 'tenent/reading', data)
   }
