@@ -78,23 +78,19 @@ export class NewTenentComponent implements OnInit {
   }
 
   validateTenentData() {
-    if (this.tenent.name && this.tenent.email && validator.isEmail(this.tenent.email) && this.tenent.phone && validator.isMobilePhone(this.tenent.phone + "", 'en-IN') && this.tenent.password && this.tenent.cpassword && (this.tenent.password == this.tenent.cpassword)) {
-      // if (this.tenentPropertyFlag == 'yes') {
-      //   if(this.tenent.tenent_properties.property && this.tenent.tenent_properties.meter_type && this.tenent.tenent_properties.monthly_rent && this.tenent.tenent_properties.e_rate_per_unit && this.tenent.tenent_properties.security_deposit && this.tenent.tenent_properties.tenure_start && this.tenent.tenent_properties.tenure_end){
-      return true
-      //   }else{
-      //     return false
-      //   }
-      // }else{
-      //   return true
-      // }
+    if (!this.tenent.permanent_address.pincode) {
+      if (this.tenent.name && this.tenent.email && validator.isEmail(this.tenent.email) && this.tenent.phone && validator.isMobilePhone(this.tenent.phone + "", 'en-IN') && this.tenent.password && this.tenent.cpassword && (this.tenent.password == this.tenent.cpassword)) {
+        return true
+      } else {
+        return false
+      }
     } else {
-      return false
+      if (validator.isPostalCode(this.tenent.permanent_address.pincode, 'IN')) {
+        return true
+      } else {
+        return false
+      }
     }
-    // if (this.tenent.name && this.tenent.tenent_properties.meter_type && this.tenent.tenent_properties.e_rate_per_unit && this.tenent.tenent_properties.monthly_rent) {
-    //   return true
-    // }
-    // return false
   }
 
 }

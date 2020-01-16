@@ -19,7 +19,6 @@ export class PaymentComponent implements OnInit {
 
   constructor(private ownerService: OwnerService, private router: Router) {
     this.getPayments()
-    // this.getOverview()
   }
 
   paymentUpdated() {
@@ -40,6 +39,16 @@ export class PaymentComponent implements OnInit {
     this.selected_payment.payment_index = index
   }
 
+  deletePayment() {
+    this.ownerService.tenentPaymentDelete(this.selected_payment).subscribe(resp => {
+      this.payments.splice(this.selected_payment.payment_index, 1)
+      $('#deleteModal').modal('hide')
+    }, err => {
+      $('#deleteModal').modal('hide')
+      console.log(err)
+    })
+  }
+
   getOverview() {
     this.payments.forEach(item => {
       this.overview.total += item['amount']
@@ -50,6 +59,7 @@ export class PaymentComponent implements OnInit {
     this.ownerService.getPayments({}).subscribe(resp => {
       this.payments = resp['result']
       this.getOverview()
+      console.log(resp['result'])
     }, err => {
       console.log(err)
     })

@@ -53,7 +53,7 @@ router.get('/all', verifyToken, function (req, res) {
   }).populate({
     path: 'tenent',
     model: UserModel,
-    select: '_id name'
+    select: '_id name tenure_end'
   }).exec(function (err, properties) {
     if (!err && properties) {
       res.status(200).json({

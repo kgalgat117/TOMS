@@ -1,67 +1,75 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-11">
+    <div class="col-md-8">
 
     </div>
-    <div class="col-1">
-      <button routerLink="/dashboard/property/new" class="btn btn-primary">Add</button>
+    <div class="col-md-2">
+      <select name="filter" [(ngModel)]="filter" (change)="filterProperties()" class="form-control">
+        <option value="">Select Availability</option>
+        <option value="available">Available</option>
+        <option value="unavailable">Unavailable</option>
+        <option value="15">Available in 15 days</option>
+        <option value="month">Available in month</option>
+      </select>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">S.No.</th>
-            <th scope="col">Name</th>
-            <th scope="col">Tenent</th>
-            <th scope="col">Created On</th>
-            <th scope="col">
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let property of properties; let i = index">
-            <th scope="row">{{i + 1}}</th>
-            <td>{{property.name}}</td>
-            <td *ngIf="property.tenent.length > 0">
-              <div class="container-fluid align-items-center">
-                <div *ngFor="let tenent of property.tenent; let j = index" class="row">
-                  <div class="col-md-2">
-                    <span>{{tenent.name}}</span>
-                  </div>
-                  <div class="col-md-1 ">
-                    <button (click)="updateDeleteModal(property, tenent, i)" data-toggle="modal"
-                      data-target="#deleteModal" type="button" class="close" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td *ngIf="property.tenent.length == 0">No Tenent</td>
-            <td>{{property.created_on | date}}</td>
-            <td>
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Actions
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" (click)="editProperty(property)">Edit</a>
-                  <a class="dropdown-item" (click)="updateTenentData(property, i)" data-toggle="modal"
-                    data-target="#paymentModal">Assign Tenent</a>
-                  <a class="dropdown-item">Something else here</a>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col-md-2">
+      <button routerLink="/dashboard/property/new" class="btn btn-primary">Create New Property</button>
     </div>
   </div>
 </div>
-
+<br>
+<div class="container-fluid">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S.No.</th>
+        <th scope="col">Name</th>
+        <th scope="col">Tenent</th>
+        <th scope="col">Created On</th>
+        <th scope="col">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let property of properties; let i = index">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{property.name}}</td>
+        <td *ngIf="property.tenent.length > 0">
+          <div class="container-fluid align-items-center">
+            <div *ngFor="let tenent of property.tenent; let j = index" class="row">
+              <div>
+                <span>{{tenent.name}}</span>
+              </div>
+              <div>
+                <button data-toggle="tooltip" data-placement="top" title="Delete This Entry"
+                  (click)="updateDeleteModal(property, tenent, i)" data-toggle="modal" data-target="#deleteModal"
+                  type="button" class="close" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td *ngIf="property.tenent.length == 0">No Tenent</td>
+        <td>{{property.created_on | date}}</td>
+        <td>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Actions
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" (click)="editProperty(property)">Edit</a>
+              <a class="dropdown-item" (click)="updateTenentData(property, i)" data-toggle="modal"
+                data-target="#paymentModal">Assign Tenent</a>
+              <a class="dropdown-item">Something else here</a>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel"
   aria-hidden="true">

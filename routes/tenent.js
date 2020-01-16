@@ -116,20 +116,29 @@ router.put('/payment', verifyToken, function (req, res) {
   })
 })
 
-router.post('/reading', verifyToken, function (req, res) {
-  let data = req.body
-  data.owner = req.user._id,
-    new ReadingModel(data).save(function (err, created) {
-      if (!err && created) {
-        res.status(200).json({ result: created })
-      } else {
-        res.status(400).json({ error: err || 'something went wrong' })
-      }
-    })
+router.delete('/payment', verifyToken, function (req, res) {
+  let data = req.query
+  IncomeModel.findOneAndUpdate({
+    _id: mongoose.Types.ObjectId(data._id)
+  }, {
+    $push: {
+      invisibility_array: req.user._id
+    }
+  }).exec(function (err, updated) {
+    if (!err && updated) {
+      res.status(200).json({ result: updated })
+    } else {
+      res.status(400).json({ error: err || 'something went wrong' })
+    }
+  })
 })
 
 router.get('/payments', verifyToken, function (req, res) {
-  let filter = {}
+  let filter = {
+    invisibility_array: {
+      $nin: [mongoose.Types.ObjectId(req.user._id)]
+    }
+  }
   if (req.user.role == 'owner') {
     filter.owner = mongoose.Types.ObjectId(req.user._id)
     if (req.query.tenent) {
@@ -149,6 +158,18 @@ router.get('/payments', verifyToken, function (req, res) {
       res.status(400).json({ error: err || 'something went wrong' })
     }
   })
+})
+
+router.post('/reading', verifyToken, function (req, res) {
+  let data = req.body
+  data.owner = req.user._id,
+    new ReadingModel(data).save(function (err, created) {
+      if (!err && created) {
+        res.status(200).json({ result: created })
+      } else {
+        res.status(400).json({ error: err || 'something went wrong' })
+      }
+    })
 })
 
 module.exports = router;

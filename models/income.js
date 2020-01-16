@@ -26,6 +26,10 @@ let incomeSchema = new mongoose.Schema({
     },
     remarks: {
         type: String
+    },
+    invisibility_array: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'users'
     }
 })
 

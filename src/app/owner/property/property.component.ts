@@ -23,9 +23,33 @@ export class PropertyComponent implements OnInit {
 
   delete_data: any = {}
 
+  filter: string = ''
+
+  temp_properties: Array<Object> = []
+
   constructor(private ownerService: OwnerService, private router: Router) {
     this.getProperties()
     this.getTenents()
+  }
+
+  filterProperties() {
+    if (this.filter == '') {
+      this.properties = this.temp_properties
+    } else if (this.filter == 'available') {
+      this.properties = this.temp_properties.filter(item => {
+        if (item['tenent'].length == 0) {
+          return true
+        }
+        return false
+      })
+    } else if (this.filter == 'unavailable') {
+      this.properties = this.temp_properties.filter(item => {
+        if (item['tenent'].length == 0) {
+          return false
+        }
+        return true
+      })
+    }
   }
 
   updateTenentData(property, index) {
@@ -91,6 +115,7 @@ export class PropertyComponent implements OnInit {
     this.ownerService.getProperties(this.propertiesParams).subscribe(resp => {
       console.log(resp)
       this.properties = resp['result']
+      this.temp_properties = resp['result']
     }, err => {
       console.log(err)
     })

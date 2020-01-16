@@ -75,6 +75,10 @@ export class OwnerService {
     return this.http.put(this.URL + 'tenent/payment', data)
   }
 
+  tenentPaymentDelete(data) {
+    return this.http.delete(this.URL + 'tenent/payment', { params: data })
+  }
+
   tenentPayments(params) {
     return this.http.get(this.URL + 'tenent/payments', { params: params })
   }
