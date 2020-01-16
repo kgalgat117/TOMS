@@ -15,7 +15,10 @@
           <tr>
             <th scope="col">S.No.</th>
             <th scope="col">Name</th>
-            <th scope="col">Created On</th>
+            <th scope="col">Monthly Rent</th>
+            <th scope="col">Security Deposit</th>
+            <th scope="col">Tenure Start</th>
+            <th scope="col">Tenure End</th>
             <th scope="col">
 
             </th>
@@ -25,7 +28,14 @@
           <tr *ngFor="let tenent of tenents; let i = index">
             <th scope="row">{{i + 1}}</th>
             <td>{{tenent.name}}</td>
-            <td>{{tenent.created_on | date}}</td>
+            <td *ngIf="tenent.tenent_properties.monthly_rent">{{tenent.tenent_properties.monthly_rent}}</td>
+            <td *ngIf="!tenent.tenent_properties.monthly_rent">0</td>
+            <td *ngIf="tenent.tenent_properties.security_deposit">{{tenent.tenent_properties.security_deposit}}</td>
+            <td *ngIf="!tenent.tenent_properties.security_deposit">0</td>
+            <td *ngIf="tenent.tenent_properties.tenure_start">{{tenent.tenent_properties.tenure_start | date}}</td>
+            <td *ngIf="!tenent.tenent_properties.tenure_start">-</td>
+            <td *ngIf="tenent.tenent_properties.tenure_end">{{tenent.tenent_properties.tenure_end | date}}</td>
+            <td *ngIf="!tenent.tenent_properties.tenure_end">0</td>
             <td>
               <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"

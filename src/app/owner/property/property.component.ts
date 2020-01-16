@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OwnerService } from '../owner.service';
 import { Router } from '@angular/router';
+import * as moment from 'moment'
 
 declare var $: any;
 
@@ -48,6 +49,50 @@ export class PropertyComponent implements OnInit {
           return false
         }
         return true
+      })
+    } else if (this.filter == '15') {
+      this.properties = []
+      this.temp_properties.filter(item => {
+        if (item['tenent'].length == 0) {
+          return true
+        } else {
+          item['tenent'].forEach(item2 => {
+            let today = moment().add(15, 'day').toDate()
+            if (!item2['tenent_properties']['tenure_end']) {
+              return false
+            } else {
+              let end = new Date(item2['tenent_properties']['tenure_end'])
+              if (end < today) {
+                this.properties.push(item)
+                return true
+              } else {
+                return false
+              }
+            }
+          })
+        }
+      })
+    } else if (this.filter == 'month') {
+      this.properties = []
+      this.temp_properties.filter(item => {
+        if (item['tenent'].length == 0) {
+          return true
+        } else {
+          item['tenent'].forEach(item2 => {
+            let today = moment().add(30, 'day').toDate()
+            if (!item2['tenent_properties']['tenure_end']) {
+              return false
+            } else {
+              let end = new Date(item2['tenent_properties']['tenure_end'])
+              if (end < today) {
+                this.properties.push(item)
+                return true
+              } else {
+                return false
+              }
+            }
+          })
+        }
       })
     }
   }

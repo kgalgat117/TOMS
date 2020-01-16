@@ -19,7 +19,7 @@ var Middlewares = {
       payload = jwt.verify(token, secretKey, {
         ignoreExpiration: true
       })
-      console.log(payload)
+      // console.log(payload)
     } catch (err) {
       payload = false;
       console.log(err)

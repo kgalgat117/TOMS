@@ -58,6 +58,12 @@ export class NewTenentComponent implements OnInit {
   getTenent() {
     this.OwnerService.getTenent(this.tenentParams).subscribe(resp => {
       this.tenent = resp['result']
+      if (!this.tenent.tenent_properties) {
+        this.tenent.tenent_properties = {}
+      }
+      if (!this.tenent.permanent_address) {
+        this.tenent.permanent_address = {}
+      }
     }, err => {
       console.log(err)
     })
