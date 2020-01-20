@@ -9,6 +9,7 @@ declare var $: any;
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
+
 export class PaymentComponent implements OnInit {
 
   payments: Array<Object> = []
@@ -37,6 +38,7 @@ export class PaymentComponent implements OnInit {
     } else {
       this.payments = this.temp_payments
     }
+    this.getOverview()
   }
 
   getTenents() {
