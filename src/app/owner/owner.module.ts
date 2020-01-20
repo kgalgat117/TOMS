@@ -4,12 +4,14 @@ import { OwnerRoutingModule, OwnerRoutingComponents } from './owner-routing.modu
 import { SharedModule } from '../shared/shared.module';
 
 import { MatDatepickerModule } from '@angular/material/datepicker'
-import {MatInputModule} from '@angular/material/input';
-import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
-    OwnerRoutingComponents,
+    OwnerRoutingComponents
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-    MatRippleModule
+    MatRippleModule,
+    GoogleChartsModule
   ]
 })
 export class OwnerModule { }

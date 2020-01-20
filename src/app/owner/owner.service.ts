@@ -91,4 +91,8 @@ export class OwnerService {
     return this.http.get(this.URL + 'tenent/payments', { params: params })
   }
 
+  getTenentsPayments(params) {
+    return this.http.get(this.URL + 'tenent/graph/payments', { params: params })
+  }
+
 }

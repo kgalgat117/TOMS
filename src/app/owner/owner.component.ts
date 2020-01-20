@@ -10,7 +10,8 @@ declare var $: any;
 
 export class OwnerComponent implements OnInit {
 
-    constructor(private authService: AuthService) { }
+    constructor(private authService: AuthService) {
+    }
 
     toggle() {
         $("body").toggleClass("sidebar-toggled");
@@ -20,7 +21,7 @@ export class OwnerComponent implements OnInit {
         };
     }
 
-    logout(){
+    logout() {
         this.authService.logoutUser()
     }
 
