@@ -20,6 +20,8 @@ export class NewTenentComponent implements OnInit {
   properties: Array<object> = []
   propertiesParams: Object = {}
 
+  errorCodes: Array<number> = []
+
   constructor(private OwnerService: OwnerService, private router: Router, private activeRoute: ActivatedRoute) {
     this.activeRoute.queryParams.subscribe(params => {
       if (params['tenent']) {
@@ -52,7 +54,14 @@ export class NewTenentComponent implements OnInit {
       this.router.navigate(['/dashboard/tenent'])
     }, err => {
       console.log(err)
+      if (err.error && err.error.code && err.error.code == 11000) {
+        this.errorCodes.push(11000)
+      }
     })
+  }
+
+  emailChange() {
+    this.errorCodes.splice(this.errorCodes.indexOf(11000), 1)
   }
 
   getTenent() {
@@ -79,24 +88,27 @@ export class NewTenentComponent implements OnInit {
         // console.log(resp)
       }, err => {
         console.log(err)
+        if (err.error && err.error.error.code && err.error.error.code == 11000) {
+          this.errorCodes.push(11000)
+        }
       })
     }
   }
 
   validateTenentData() {
-    if (!this.tenent.permanent_address.pincode) {
-      if (this.tenent.name && this.tenent.email && validator.isEmail(this.tenent.email) && this.tenent.phone && validator.isMobilePhone(this.tenent.phone + "", 'en-IN') && this.tenent.password && this.tenent.cpassword && (this.tenent.password == this.tenent.cpassword)) {
-        return true
-      } else {
-        return false
-      }
-    } else {
-      if (validator.isPostalCode(this.tenent.permanent_address.pincode, 'IN')) {
-        return true
-      } else {
-        return false
-      }
+    if (this.tenent.permanent_address.pincode && !validator.isPostalCode(this.tenent.permanent_address.pincode + "", 'IN')) {
+      return false
     }
+    if (this.tenent.email && !validator.isEmail(this.tenent.email)) {
+      return false
+    }
+    if (!this.tenent.name || !this.tenent.phone || (this.tenent.phone && !validator.isMobilePhone(this.tenent.phone + '', 'en-IN'))) {
+      return false
+    }
+    if (!this.tenent._id && (!this.tenent.password || !this.tenent.cpassword || (this.tenent.password != this.tenent.cpassword))) {
+      return false
+    }
+    return true
   }
 
 }

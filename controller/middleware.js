@@ -2,6 +2,7 @@ var UserModel = require('./../models/user')
 
 const jwt = require('jsonwebtoken')
 var mongoose = require('mongoose')
+var validator = require('validator').default
 
 const secretKey = 'Happier';
 
@@ -42,10 +43,20 @@ var Middlewares = {
   },
 
   validateUserSignUpData: function (req, res, next) {
-    if (req.body.name && req.body.email && req.body.password && req.body.phone && req.body.role) {
+    if (req.body.name && req.body.email && validator.isEmail(req.body.email) && req.body.password && req.body.phone && validator.isMobilePhone(req.body.phone + "", 'en-IN') && req.body.role && req.body.role == 'owner') {
       next()
     } else {
-      return res.status(400).json({ error: 'Incomplete Data' })
+      return res.status(400).json({ error: 'Incorrect Data' })
+    }
+  },
+
+  validateUserSignInData: function (req, res, next) {
+    if (req.body.email && validator.isEmail(req.body.email) && req.body.password) {
+      next()
+    } else if (req.body.email && validator.isMobilePhone(req.body.email, 'en-IN') && req.body.password) {
+      next()
+    } else {
+      return res.status(400).json({ error: 'Incorrect Data ' })
     }
   }
 

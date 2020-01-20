@@ -57,12 +57,14 @@
                 <!-- </div> -->
               </div>
               <div class="form-group">
-                <input type="email" name="email" [(ngModel)]="user.email" class="form-control form-control-user"
-                  id="exampleInputEmail" placeholder="Email Address">
+                <input type="email" name="email" [(ngModel)]="user.email" (keyup)="emailChanged()"
+                  (change)="emailChanged()" class="form-control form-control-user" id="exampleInputEmail"
+                  placeholder="Email Address">
               </div>
               <div class="form-group">
-                <input type="text" name="phone" [(ngModel)]="user.phone" class="form-control form-control-user"
-                  id="exampleInputEmail" placeholder="Phone Number">
+                <input type="text" name="phone" [(ngModel)]="user.phone" (keyup)="emailChanged()"
+                  (change)="emailChanged()" class="form-control form-control-user" id="exampleInputPhone"
+                  placeholder="Phone Number">
               </div>
               <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
@@ -87,7 +89,14 @@
                   <label class="custom-control-label" for="customRadioInline2">Tenent</label>
                 </div>
               </div> -->
-              <button [disabled]="!validateData()" (click)="CreateUser()" class="btn btn-primary btn-user btn-block">
+              <div *ngIf="errorCodes.length > 0" class="form-group">
+                <p style="color: red;" *ngIf="errorCodes.indexOf(11000) != -1"> Email or Phone Already Exist</p>
+              </div>
+              <button *ngIf="process == 'inactive'" [disabled]="!validateData()" (click)="CreateUser()"
+                class="btn btn-primary btn-user btn-block">
+                Register Account
+              </button>
+              <button *ngIf="process == 'active'" [disabled]="'true'" class="btn btn-primary btn-user btn-block">
                 Register Account
               </button>
             </form>

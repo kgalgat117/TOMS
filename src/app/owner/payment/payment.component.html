@@ -37,6 +37,20 @@
         </div>
     </div>
     <hr>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <select (change)="tenentChange($event)" class="form-control">
+                    <option value="">All</option>
+                    <option *ngFor="let tenent of tenents" value="{{tenent.phone}}">{{tenent.name}}</option>
+                </select>
+            </div>
+            <div class="col-9">
+
+            </div>
+        </div>
+    </div>
+    <hr>
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">

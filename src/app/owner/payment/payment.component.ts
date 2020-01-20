@@ -12,13 +12,40 @@ declare var $: any;
 export class PaymentComponent implements OnInit {
 
   payments: Array<Object> = []
+  temp_payments: Array<Object> = []
   overview: any = {
     total: 0,
   }
   selected_payment: any = {}
 
+  tenents: Array<object> = []
+  tenentsParams: Object = {}
+
   constructor(private ownerService: OwnerService, private router: Router) {
     this.getPayments()
+    this.getTenents()
+  }
+
+  tenentChange(event) {
+    if (event.target.value) {
+      this.payments = this.temp_payments.filter(item => {
+        if (item['tenent']['phone'] == event.target.value) {
+          return true
+        }
+        return false
+      })
+    } else {
+      this.payments = this.temp_payments
+    }
+  }
+
+  getTenents() {
+    this.ownerService.getTenents(this.tenentsParams).subscribe(resp => {
+      console.log(resp)
+      this.tenents = resp['result']
+    }, err => {
+      console.log(err)
+    })
   }
 
   paymentUpdated() {
@@ -26,6 +53,7 @@ export class PaymentComponent implements OnInit {
       console.log(resp)
       $('#paymentModal').modal('hide')
       this.payments[this.selected_payment.payment_index] = resp['result']
+      this.getOverview()
     }, err => {
       console.log(err)
     })
@@ -43,6 +71,7 @@ export class PaymentComponent implements OnInit {
     this.ownerService.tenentPaymentDelete(this.selected_payment).subscribe(resp => {
       this.payments.splice(this.selected_payment.payment_index, 1)
       $('#deleteModal').modal('hide')
+      this.getOverview()
     }, err => {
       $('#deleteModal').modal('hide')
       console.log(err)
@@ -50,6 +79,7 @@ export class PaymentComponent implements OnInit {
   }
 
   getOverview() {
+    this.overview.total = 0
     this.payments.forEach(item => {
       this.overview.total += item['amount']
     })
@@ -58,6 +88,7 @@ export class PaymentComponent implements OnInit {
   getPayments() {
     this.ownerService.getPayments({}).subscribe(resp => {
       this.payments = resp['result']
+      this.temp_payments = resp['result']
       this.getOverview()
       console.log(resp['result'])
     }, err => {

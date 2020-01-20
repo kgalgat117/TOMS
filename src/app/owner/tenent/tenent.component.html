@@ -35,7 +35,7 @@
             <td *ngIf="tenent.tenent_properties.tenure_start">{{tenent.tenent_properties.tenure_start | date}}</td>
             <td *ngIf="!tenent.tenent_properties.tenure_start">-</td>
             <td *ngIf="tenent.tenent_properties.tenure_end">{{tenent.tenent_properties.tenure_end | date}}</td>
-            <td *ngIf="!tenent.tenent_properties.tenure_end">0</td>
+            <td *ngIf="!tenent.tenent_properties.tenure_end">-</td>
             <td>
               <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"

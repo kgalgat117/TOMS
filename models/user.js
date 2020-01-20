@@ -3,8 +3,7 @@ var mongoose = require('mongoose')
 
 let userSchema = new mongoose.Schema({
     email: {
-        type: String,
-        unique: true
+        type: String
     },
     name: {
         type: String,
@@ -17,14 +16,14 @@ let userSchema = new mongoose.Schema({
     tenent_properties: {
         type: {
             e_rate_per_unit: Number,
-            meter_type: {type: String, enum: ['domestic', 'commercial']},
+            meter_type: { type: String, enum: ['domestic', 'commercial'] },
             monthly_rent: Number,
             security_deposit: Number,
-            owner: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
+            owner: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
             // property: {type: mongoose.Schema.Types.ObjectId, ref: 'properties'},
-            tenure_start: {type: Date},
-            tenure_end: {type: Date},
-            created_on: {type: Date, default: Date.now()}
+            tenure_start: { type: Date },
+            tenure_end: { type: Date },
+            created_on: { type: Date, default: Date.now() }
         }
     },
     permanent_address: {
@@ -52,7 +51,8 @@ let userSchema = new mongoose.Schema({
     },
     phone: {
         type: Number,
-        required: true
+        required: true,
+        unique: true
     },
     created_on: {
         type: Date,

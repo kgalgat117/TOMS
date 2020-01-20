@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
   validateData() {
     if (validator.isEmail(this.user.email) && this.user.password) {
       return true
+    } else if (validator.isMobilePhone(this.user.email, 'en-IN') && this.user.password) {
+      return true
     }
     return false
   }

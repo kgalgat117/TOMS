@@ -6,6 +6,7 @@ var UserModel = require('../models/user')
 var verifyToken = require('./../controller/middleware').verifyToken
 
 var mongoose = require('mongoose')
+var validator = require('validator').default
 
 router.post('/', verifyToken, function (req, res) {
   let data = req.body
@@ -68,82 +69,106 @@ router.get('/all', verifyToken, function (req, res) {
 })
 
 router.get('/', verifyToken, function (req, res) {
-  PropertyModel.findOne({
-    _id: mongoose.Types.ObjectId(req.query.property)
-  }).exec(function (err, property) {
-    if (!err && property) {
-      res.status(200).json({
-        result: property
-      })
-    } else {
-      res.status(400).json({
-        error: err || 'something went wrong'
-      })
-    }
-  })
+  if (validateMongoDBId(req, 'query', 'property')) {
+    PropertyModel.findOne({
+      _id: mongoose.Types.ObjectId(req.query.property)
+    }).exec(function (err, property) {
+      if (!err && property) {
+        res.status(200).json({
+          result: property
+        })
+      } else {
+        res.status(400).json({
+          error: err || 'something went wrong'
+        })
+      }
+    })
+  } else {
+    res.status(400).json({ error: 'incorrect data' })
+  }
 })
 
 router.put('/', verifyToken, function (req, res) {
-  PropertyModel.findOneAndUpdate({
-    _id: mongoose.Types.ObjectId(req.body._id)
-  }, {
-    name: req.body.name,
-    category: req.body.category
-  }, { new: true }).exec(function (err, property) {
-    if (!err && property) {
-      res.status(200).json({
-        result: property
-      })
-    } else {
-      res.status(400).json({
-        error: err || 'something went wrong'
-      })
-    }
-  })
+  if (validateMongoDBId(req, 'body', '_id')) {
+    PropertyModel.findOneAndUpdate({
+      _id: mongoose.Types.ObjectId(req.body._id)
+    }, {
+      name: req.body.name,
+      category: req.body.category
+    }, { new: true, runValidators: true }).exec(function (err, property) {
+      if (!err && property) {
+        res.status(200).json({
+          result: property
+        })
+      } else {
+        res.status(400).json({
+          error: err || 'something went wrong'
+        })
+      }
+    })
+  } else {
+    res.status(400).json({ error: 'incorrect data' })
+  }
 })
 
 router.post('/tenent', verifyToken, function (req, res) {
-  PropertyModel.findOneAndUpdate({
-    _id: mongoose.Types.ObjectId(req.body.property)
-  }, {
-    $addToSet: {
-      tenent: req.body.tenent
-    }
-  }, {
-    new: true
-  }).populate({
-    path: 'tenent',
-    model: UserModel,
-    select: '_id name email'
-  }).exec(function (err, updatedProperty) {
-    if (!err && updatedProperty) {
-      res.status(200).json({ result: updatedProperty })
-    } else {
-      res.status(400).json({ error: err || 'something went wrong' })
-    }
-  })
+  if (validateMongoDBId(req, 'body', 'property') && validateMongoDBId(req, 'body', 'tenent')) {
+    PropertyModel.findOneAndUpdate({
+      _id: mongoose.Types.ObjectId(req.body.property)
+    }, {
+      $addToSet: {
+        tenent: req.body.tenent
+      }
+    }, {
+      new: true
+    }).populate({
+      path: 'tenent',
+      model: UserModel,
+      select: '_id name email'
+    }).exec(function (err, updatedProperty) {
+      if (!err && updatedProperty) {
+        res.status(200).json({ result: updatedProperty })
+      } else {
+        res.status(400).json({ error: err || 'something went wrong' })
+      }
+    })
+  } else {
+    res.status(400).json({ error: 'incorrect data' })
+  }
 })
 
 router.delete('/tenent', verifyToken, function (req, res) {
-  PropertyModel.findOneAndUpdate({
-    _id: mongoose.Types.ObjectId(req.query.property)
-  }, {
-    $pull: {
-      tenent: req.query.tenent
-    }
-  }, {
-    new: true
-  }).populate({
-    path: 'tenent',
-    model: UserModel,
-    select: '_id name email'
-  }).exec(function (err, updatedProperty) {
-    if (!err && updatedProperty) {
-      res.status(200).json({ result: updatedProperty })
-    } else {
-      res.status(400).json({ error: err || 'something went wrong' })
-    }
-  })
+  if (validateMongoDBId(req, 'query', 'property') && validateMongoDBId(req, 'query', 'tenent')) {
+    PropertyModel.findOneAndUpdate({
+      _id: mongoose.Types.ObjectId(req.query.property)
+    }, {
+      $pull: {
+        tenent: req.query.tenent
+      }
+    }, {
+      new: true
+    }).populate({
+      path: 'tenent',
+      model: UserModel,
+      select: '_id name email'
+    }).exec(function (err, updatedProperty) {
+      if (!err && updatedProperty) {
+        res.status(200).json({ result: updatedProperty })
+      } else {
+        res.status(400).json({ error: err || 'something went wrong' })
+      }
+    })
+  } else {
+    res.status(400).json({ error: 'incorrect data' })
+  }
 })
 
 module.exports = router;
+
+function validateMongoDBId(request, carrier, field) {
+  if (request[carrier][field] && validator.isMongoId(request[carrier][field])) {
+    return true
+  } else {
+    return false
+  }
+}
