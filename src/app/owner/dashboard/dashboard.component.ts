@@ -43,9 +43,9 @@ export class DashboardComponent implements OnInit {
   }
 
   getTenentsPayment() {
-    this.ownerService.getTenentsPayments({}).subscription(resp => {
+    // this.ownerService.getTenentsPayments({}).subscription(resp => {
 
-    })
+    // })
   }
 
 

@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   }
+  phnRegex = new RegExp(/([+]?\d{1,2}[.-\s]?)?(\d{3}[.-]?){2}\d{4}/);
 
   constructor(private userService: UserService, private cookieService: CookieService, private router: Router) { }
 
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
   validateData() {
     if (validator.isEmail(this.user.email) && this.user.password) {
       return true
-    } else if (validator.isMobilePhone(this.user.email, 'en-IN') && this.user.password) {
+    } else if (this.phnRegex.test(this.user.email) && this.user.password) {
       return true
     }
     return false

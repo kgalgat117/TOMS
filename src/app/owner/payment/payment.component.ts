@@ -12,15 +12,15 @@ declare var $: any;
 
 export class PaymentComponent implements OnInit {
 
-  payments: Array<Object> = []
-  temp_payments: Array<Object> = []
+  payments: any = []
+  temp_payments: any = []
   overview: any = {
     total: 0,
   }
   selected_payment: any = {}
 
-  tenents: Array<object> = []
-  tenentsParams: Object = {}
+  tenents: any = []
+  tenentsParams: any = {}
 
   constructor(private ownerService: OwnerService, private router: Router) {
     this.getPayments()

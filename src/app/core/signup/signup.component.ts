@@ -21,6 +21,7 @@ export class SignupComponent implements OnInit {
   process: string = 'inactive'
 
   errorCodes: Array<number> = []
+  phnRegex = new RegExp(/([+]?\d{1,2}[.-\s]?)?(\d{3}[.-]?){2}\d{4}/);
 
   constructor(private router: Router, private userService: UserService, private cookieService: CookieService) { }
 
@@ -61,7 +62,7 @@ export class SignupComponent implements OnInit {
   }
 
   validateData() {
-    if (validator.isEmail(this.user.email) && this.user.name && this.user.password && this.user.cpassword && (this.user.password == this.user.cpassword) && this.user.role && validator.isMobilePhone(this.user.phone, 'en-IN')) {
+    if (validator.isEmail(this.user.email) && this.user.name && this.user.password && this.user.cpassword && (this.user.password == this.user.cpassword) && this.user.role && this.phnRegex.test(this.user.phone)) {
       return true
     }
     return false

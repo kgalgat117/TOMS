@@ -19,7 +19,7 @@ export class NewTenentComponent implements OnInit {
 
   properties: Array<object> = []
   propertiesParams: Object = {}
-
+  phnRegex = new RegExp(/([+]?\d{1,2}[.-\s]?)?(\d{3}[.-]?){2}\d{4}/);
   errorCodes: Array<number> = []
 
   constructor(private OwnerService: OwnerService, private router: Router, private activeRoute: ActivatedRoute) {
@@ -102,7 +102,7 @@ export class NewTenentComponent implements OnInit {
     if (this.tenent.email && !validator.isEmail(this.tenent.email)) {
       return false
     }
-    if (!this.tenent.name || !this.tenent.phone || (this.tenent.phone && !validator.isMobilePhone(this.tenent.phone + '', 'en-IN'))) {
+    if (!this.tenent.name || !this.tenent.phone || (this.tenent.phone && !this.phnRegex.test(this.tenent.phone))) {
       return false
     }
     if (!this.tenent._id && (!this.tenent.password || !this.tenent.cpassword || (this.tenent.password != this.tenent.cpassword))) {

@@ -29,7 +29,7 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'angular/dist/job')))
+app.use(express.static(path.join(__dirname, 'dist/TOMS')))
 
 app.use('/property', propertyRouter);
 app.use('/meter', meterRouter);
@@ -38,7 +38,7 @@ app.use('/user', usersRouter);
 
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'angular/dist/job/index.html'));
+    res.sendFile(path.join(__dirname, 'dist/TOMS/index.html'));
 });
 
 
