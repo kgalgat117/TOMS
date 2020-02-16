@@ -23,6 +23,8 @@ export class SignupComponent implements OnInit {
   errorCodes: Array<number> = []
   phnRegex = new RegExp(/([+]?\d{1,2}[.-\s]?)?(\d{3}[.-]?){2}\d{4}/);
 
+  title = 'TOMS';
+
   constructor(private router: Router, private userService: UserService, private cookieService: CookieService) { }
 
   CreateUser() {

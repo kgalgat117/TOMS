@@ -5,7 +5,7 @@ var fs = require('fs')
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors')
-var DB = require('./config/db') 
+var DB = require('./config/db')
 
 DB.on('connected', function () {
     console.log('connected to database')
@@ -30,6 +30,20 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'dist/TOMS')))
+
+app.get('/test', function (req, res) {
+    function randomPhone() {
+        let randomPhoneLength = 10
+        let word = ''
+        for (let i = 0; i < randomPhoneLength; i++) {
+            let max = 9, min = 0
+            let randomCharCode = Math.floor(Math.random() * (max - min + 1) + min)
+            word += randomCharCode
+        }
+        return word
+    }
+    res.status(200).json({ result: randomPhone() })
+})
 
 app.use('/property', propertyRouter);
 app.use('/meter', meterRouter);
