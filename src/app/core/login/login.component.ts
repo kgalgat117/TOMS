@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import validator from 'validator';
+import { Secret } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-login',
@@ -17,12 +18,12 @@ export class LoginComponent implements OnInit {
   }
   phnRegex = new RegExp(/([+]?\d{1,2}[.-\s]?)?(\d{3}[.-]?){2}\d{4}/);
 
-  constructor(private userService: UserService, private cookieService: CookieService, private router: Router) { }
+  constructor(private userService: UserService, private cookieService: CookieService, private router: Router, private secret: Secret) { }
 
   signin() {
     if (this.validateData()) {
       this.userService.userSignIn(this.user).subscribe(response => {
-        this.cookieService.set('UID', response['token'], 1, '/', 'localhost');
+        this.cookieService.set('UID', response['token'], 1, '/', this.secret.HOST);
         if (response['user']['role'] == 'tenent') {
           this.router.navigate(['/home'])
         } else {

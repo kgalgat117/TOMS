@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from './../../../environments/environment'
 
 @Injectable({
     providedIn: 'root'
@@ -6,7 +7,11 @@ import { Injectable } from '@angular/core';
 
 export class Secret {
 
-    DOMAIN_NAME = 'http://localhost:4200/'
-    HOST = 'localhost'
+    DOMAIN_NAME = environment.DOMAIN_NAME
+    HOST = environment.HOST
+
+    constructor() {
+        console.log(this.DOMAIN_NAME, this.HOST)
+    }
 
 }

@@ -14,7 +14,7 @@ export class AuthService {
     constructor(private router: Router, private http: HttpClient, private secret: Secret, private cookieService: CookieService) { }
 
     logoutUser() {
-        this.cookieService.delete('UID', '/', 'localhost')
+        this.cookieService.delete('UID', '/', this.secret.HOST)
         this.router.navigate(['/login'])
     }
 
