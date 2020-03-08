@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import validator from 'validator';
 import { CookieService } from 'ngx-cookie-service';
+import { Secret } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-signup',
@@ -25,7 +26,7 @@ export class SignupComponent implements OnInit {
 
   title = 'TOMS';
 
-  constructor(private router: Router, private userService: UserService, private cookieService: CookieService) { }
+  constructor(private router: Router, private userService: UserService, private cookieService: CookieService, private secret: Secret) { }
 
   CreateUser() {
     if (this.validateData()) {
@@ -51,7 +52,8 @@ export class SignupComponent implements OnInit {
     this.userService.userSignIn(this.user).subscribe(response => {
       console.log('user signup')
       this.process = 'inactive'
-      this.cookieService.set('UID', response['token'], 1, '/', 'localhost');
+      this.cookieService.set('UID', response['token'], 1, '/', this.secret.HOST);
+      localStorage.setItem('UID', response['token'])
       if (response['user']['role'] == 'tenent') {
         this.router.navigate(['/home'])
       } else {
