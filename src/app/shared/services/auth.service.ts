@@ -15,13 +15,14 @@ export class AuthService {
 
     logoutUser() {
         this.cookieService.delete('UID', '/', this.secret.HOST)
+        localStorage.removeItem('UID')
         this.router.navigate(['/login'])
     }
 
     getToken() {
         var token = ''
         if (token == undefined || token == '') {
-            token = this.cookieService.get('UID')
+            token = this.cookieService.get('UID') || localStorage.getItem('UID')
         }
         return token
     }
@@ -30,7 +31,7 @@ export class AuthService {
         var token;
         var flag: any = {};
         flag.status = false;
-        token = this.cookieService.get('UID');
+        token = this.cookieService.get('UID') || localStorage.getItem('UID');
         if (token == undefined || token == '') {
             flag.status = false;
             return flag;

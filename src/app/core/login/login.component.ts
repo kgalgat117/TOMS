@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     if (this.validateData()) {
       this.userService.userSignIn(this.user).subscribe(response => {
         this.cookieService.set('UID', response['token'], 1, '/', this.secret.HOST);
+        localStorage.setItem('UID', response['token'])
         if (response['user']['role'] == 'tenent') {
           this.router.navigate(['/home'])
         } else {
