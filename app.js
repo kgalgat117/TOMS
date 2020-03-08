@@ -42,7 +42,7 @@ app.get('/test', function (req, res) {
         }
         return word
     }
-    res.status(200).json({ result: randomPhone(), new: 'added to test' })
+    res.status(200).json({ result: randomPhone(), new: 'testing auto deploy script.. 2' })
 })
 
 app.use('/property', propertyRouter);
